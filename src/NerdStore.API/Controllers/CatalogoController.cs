@@ -33,7 +33,16 @@ namespace NerdStore.API.Controllers
             if (response == null) return ProcessarRespostaMensagem(StatusCodes.Status404NotFound, "Produto não encontrado.");
             
             return RespostaPersonalizada(response);
-        }        
-        
+        }
+
+        [HttpGet("produto-categoria/{codigo}")]
+        public async Task<IActionResult> ObterProdutosPorCategoria(int codigo)
+        {
+            var response = await _produtoAppService.ObterPorCategoria(codigo);
+
+            if (response == null || !response.Any()) return ProcessarRespostaMensagem(StatusCodes.Status404NotFound, "Não existem dados para exibição.");
+
+            return RespostaPersonalizada(response);
+        }
     }
 }
